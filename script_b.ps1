@@ -38,7 +38,8 @@ $Content = $Metadata | ConvertTo-Json
 Set-Content -Path C:\SessionRecording\Output\metadata.txt -Value $Content
 
 $Date = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
-$Key = "$($BUCKET_PREFIX)$($Metadata.StackName)/$($Metadata.FleetName)/$($Metadata.SessionId)/$($Date)-metadata.txt"
+$D = Get-Date -Format "yyyy-MM-dd"
+$Key = "$($BUCKET_PREFIX)$($Metadata.StackName)/$($Metadata.FleetName)/$($D)-$($Metadata.SessionId)/$($Date)-metadata.txt"
 Write-S3Object -BucketName $BUCKET_NAME -Key $Key -File C:\SessionRecording\Output\metadata.txt -Region $BUCKET_REGION -ProfileName appstream_machine_role
 
 # This function starts FFmpeg and returns the Process object. I use the built-in gdigrad module to capture the screen. FFmpeg outputs a file named YYYY-MM-DD_HH-MM-SS-video.mp4 where the date is when FFmpeg starts recording.
